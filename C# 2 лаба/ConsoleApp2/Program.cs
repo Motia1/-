@@ -1,50 +1,40 @@
-﻿using System;
+using System;
 
-public class Customer : IComparable<Customer>
+public class Customer : IComparable<Customer> 
 {
-    private static int nextId = 1; // Статическое поле для генерации уникальных ID
-
-    public int Id { get; } // Поле только для чтения
+    private static int nextId = 1;
+    public int Id { get; }
     public string LastName { get; set; }
     public string FirstName { get; set; }
     public string MiddleName { get; set; }
     public string Address { get; set; }
     public string CreditCardNumber { get; set; }
     public decimal Balance { get; set; }
-
     public Customer()
-    {
-        Id = nextId++; // Генерация уникального ID
-    }
-
+        {
+            Id = nextId++; // Генерация уникального ID
+        }
     public Customer(string lastName, string firstName, string middleName, string address, string creditCardNumber, decimal balance)
         : this()
     {
-        LastName = lastName;
-        FirstName = firstName;
+        LastName= lastName;
+        FirstName= firstName;
         MiddleName = middleName;
         Address = address;
         CreditCardNumber = creditCardNumber;
         Balance = balance;
     }
-
+    
     public static int NumberOfCustomers { get; private set; } = 0; // Статическое поле для подсчета созданных объектов
-
-    static Customer()
-    {
-        Console.WriteLine("Статический конструктор класса Customer вызван.");
-    }
 
     public static void DisplayInfo()
     {
         Console.WriteLine($"Всего создано {NumberOfCustomers} объектов класса Customer.");
     }
-
     public override string ToString()
     {
-        return $"{LastName} {FirstName} {MiddleName} (ID: {Id})";
+        return $"{LastName} {FirstName} {MiddleName} (id: {Id}) ";
     }
-
     public int CompareTo(Customer other)
     {
         // Сравнение покупателей по фамилии, имени и отчеству
@@ -59,29 +49,14 @@ public class Customer : IComparable<Customer>
         }
         return result;
     }
-
-    public override bool Equals(object obj)
-    {
-        if (obj is Customer other)
-        {
-            return Id == other.Id;
-        }
-        return false;
-    }
-
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
-    }
 }
-
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Customer customer1 = new Customer("Иванов", "Иван", "Иванович", "Москва", "1234-5678-9012-3456", 1000);
-        Customer customer2 = new Customer("Петров", "Петр", "Петрович", "Санкт-Петербург", "5678-9012-3456-7890", 1500);
-        Customer customer3 = new Customer("Сидоров", "Сидор", "Сидорович", "Новосибирск", "9876-5432-1098-7654", 800);
+        Customer customer1 = new Customer("Петя", "Петрович", "Петровович", "Лида", "1234-1234-1234-1234" , 1500);
+        Customer customer2 = new Customer("Петя", "Аетрович", "Петровович", "Лида", "4343-4343-4343-4343", 1001);
+        Customer customer3 = new Customer("Петя", "Гетрович", "Петровович", "Лида", "9999-9999-9999-9999", 800);
 
         Customer[] customers = { customer1, customer2, customer3 };
 
@@ -103,8 +78,8 @@ class Program
             {
                 Console.WriteLine(customer);
             }
+
         }
 
-        Customer.DisplayInfo(); // Вывод информации о количестве созданных объектов
     }
 }
